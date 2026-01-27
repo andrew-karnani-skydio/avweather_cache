@@ -1,0 +1,9 @@
+# Configuration for avweather_cache service
+server:
+  port: 8080
+
+cache:
+  # Update interval (e.g., "5m", "1h30m", "300s")
+  update_interval: "5m"
+  # URL to fetch METAR data from
+  source_url: "https://aviationweather.gov/data/cache/metars.cache.xml.gz"

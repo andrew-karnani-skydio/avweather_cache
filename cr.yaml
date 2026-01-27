@@ -1,0 +1,8 @@
+# Configuration for Helm Chart Releaser
+owner: akarnani
+git-repo: avweather_cache
+charts-dir: deploy/charts
+index-path: index.yaml
+packages-dir: .cr-release-packages
+# GitHub Pages URL where the chart repository will be hosted
+pages-index-url: https://akarnani.github.io/avweather_cache/index.yaml

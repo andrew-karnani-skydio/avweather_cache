@@ -1,0 +1,38 @@
+# Version control
+.git
+.gitignore
+.github
+
+# IDE and editor files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Test artifacts
+coverage.out
+*.test
+testdata
+
+# Documentation
+*.md
+!README.md
+CLAUDE.md
+
+# Build artifacts
+avweather_cache
+*.exe
+
+# Deployment files
+deploy/
+Makefile
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.log
+*.tmp
+cache/*.json

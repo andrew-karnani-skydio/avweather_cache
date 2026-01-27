@@ -23,8 +23,8 @@ func TestCacheUpdate(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/x-gzip")
 		gzWriter := gzip.NewWriter(w)
-		defer gzWriter.Close()
-		gzWriter.Write(data)
+		defer func() { _ = gzWriter.Close() }()
+		_, _ = gzWriter.Write(data)
 	}))
 	defer server.Close()
 
@@ -84,12 +84,12 @@ func TestCacheMergeNotPurge(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/x-gzip")
 		gzWriter := gzip.NewWriter(w)
-		defer gzWriter.Close()
+		defer func() { _ = gzWriter.Close() }()
 
 		if callCount == 0 {
-			gzWriter.Write([]byte(data1))
+			_, _ = gzWriter.Write([]byte(data1))
 		} else {
-			gzWriter.Write([]byte(data2))
+			_, _ = gzWriter.Write([]byte(data2))
 		}
 		callCount++
 	}))

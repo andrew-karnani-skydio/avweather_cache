@@ -105,10 +105,16 @@ func (h *Handler) MetarHandler(w http.ResponseWriter, r *http.Request) {
 	switch format {
 	case "json":
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(filteredMetars)
+		if err := json.NewEncoder(w).Encode(filteredMetars); err != nil {
+			http.Error(w, fmt.Sprintf("failed to encode JSON: %v", err), http.StatusInternalServerError)
+			return
+		}
 	case "yaml":
 		w.Header().Set("Content-Type", "application/x-yaml")
-		yaml.NewEncoder(w).Encode(filteredMetars)
+		if err := yaml.NewEncoder(w).Encode(filteredMetars); err != nil {
+			http.Error(w, fmt.Sprintf("failed to encode YAML: %v", err), http.StatusInternalServerError)
+			return
+		}
 	case "csv":
 		w.Header().Set("Content-Type", "text/csv")
 		if err := writeCSV(w, filteredMetars, fields); err != nil {

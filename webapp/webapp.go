@@ -99,7 +99,9 @@ func (h *Handler) SearchHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		http.Error(w, fmt.Sprintf("failed to encode JSON: %v", err), http.StatusInternalServerError)
+	}
 }
 
 // IndexHandler serves the main dashboard
@@ -227,7 +229,9 @@ func (h *Handler) IndexHandler(w http.ResponseWriter, r *http.Request) {
 	}).Parse(htmlTemplate))
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	tmpl.Execute(w, data)
+	if err := tmpl.Execute(w, data); err != nil {
+		http.Error(w, fmt.Sprintf("failed to execute template: %v", err), http.StatusInternalServerError)
+	}
 }
 
 const htmlTemplate = `

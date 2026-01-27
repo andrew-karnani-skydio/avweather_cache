@@ -83,7 +83,7 @@ func (c *Cache) update() error {
 		metrics.PullErrors.Inc()
 		return fmt.Errorf("failed to fetch data: %w", err)
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	if resp.StatusCode != http.StatusOK {
 		err := fmt.Errorf("unexpected status code: %d", resp.StatusCode)
@@ -99,7 +99,7 @@ func (c *Cache) update() error {
 		metrics.PullErrors.Inc()
 		return fmt.Errorf("failed to create gzip reader: %w", err)
 	}
-	defer gzReader.Close()
+	defer func() { _ = gzReader.Close() }()
 
 	// Read all data
 	data, err := io.ReadAll(gzReader)

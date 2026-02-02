@@ -16,6 +16,10 @@ Aviation Weather Cache Service - A Go service that caches METAR data from aviati
 
 4. **Configurable Duration**: Update intervals use Go's time.Duration format (e.g., "5m", "1h30m") for clarity.
 
+## Important steps
+
+* Anytime metrics are changed the grafana dashboard in deploy/ should be updated
+
 ## Development Setup
 
 ```bash
